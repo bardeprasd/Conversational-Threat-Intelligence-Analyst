@@ -37,6 +37,9 @@ async def _stream_tool_progress(
 
 def _untrusted_output(result: Any) -> str:
     payload = result.model_dump(mode="json")
+    # Tool results may include provider-controlled text. Wrapping the JSON makes
+    # the evidence boundary explicit for the model and pairs with the system rule
+    # that content inside this block is data, not instructions.
     return (
         "<UNTRUSTED_EVIDENCE>\n"
         + json.dumps(payload, ensure_ascii=True, sort_keys=True)
@@ -153,6 +156,9 @@ async def get_entity_attribute(
 
 
 def _last_user_text(agent_input: str | list[dict[str, Any]]) -> str:
+    # Guardrails can receive either a plain string or the expanded transcript.
+    # Check only the latest user turn so older benign history does not mask a
+    # direct injection attempt in the current request.
     if isinstance(agent_input, str):
         return agent_input
     for item in reversed(agent_input):
@@ -221,6 +227,8 @@ def build_agent() -> Agent[AgentContext[RequestContext]]:
         input_guardrails=[direct_prompt_injection_guardrail],
         model_settings=ModelSettings(
             max_tokens=1400,
+            # Serial tool calls make routing easier to audit in the assessment
+            # trace and avoid duplicate lookups against quota-limited APIs.
             parallel_tool_calls=False,
             verbosity="low",
         ),

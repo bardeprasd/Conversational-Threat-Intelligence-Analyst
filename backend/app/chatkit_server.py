@@ -57,6 +57,8 @@ class ThreatLensChatKitServer(ChatKitServer[RequestContext]):
 
         scan = scan_direct_prompt(query)
         if not scan.safe:
+            # Block obvious direct prompt injection before invoking either the
+            # model or external intelligence tools.
             trace_store.record(
                 context.trace_id,
                 kind="guardrail",
@@ -77,6 +79,8 @@ class ThreatLensChatKitServer(ChatKitServer[RequestContext]):
         input_items = await self._load_agent_input(
             thread, context, settings.thread_history_limit
         )
+        # Pass the recent transcript into the Agents SDK run so references like
+        # "that IP" or "its ASN" can be resolved without a separate database.
         agent_context = AgentContext[RequestContext](
             thread=thread,
             store=self.store,

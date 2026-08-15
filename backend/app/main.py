@@ -19,6 +19,8 @@ from .store import InMemoryStore
 
 settings = get_settings()
 if settings.openai_api_key:
+    # Configure the Agents SDK once at startup; tracing uses the same key with
+    # sensitive payload capture disabled in the runner configuration.
     set_default_openai_key(settings.openai_api_key, use_for_tracing=True)
 
 logging.basicConfig(
@@ -41,6 +43,8 @@ app.add_middleware(
 
 store = InMemoryStore()
 chatkit_server = ThreatLensChatKitServer(store)
+# Keep the public ChatKit endpoint bounded so free-tier provider APIs and model
+# tokens are not exhausted during testing or demo runs.
 rate_limiter = SlidingWindowRateLimiter(
     settings.rate_limit_requests, settings.rate_limit_window_seconds
 )
@@ -71,6 +75,8 @@ async def health() -> dict[str, object]:
 
 @app.get("/api/traces")
 async def recent_traces(limit: int = 20) -> dict[str, object]:
+    # Expose only the local trace summary, capped to avoid dumping unbounded
+    # request history through the demo endpoint.
     bounded = max(1, min(limit, 100))
     return {"data": trace_store.recent(bounded)}
 
@@ -91,6 +97,8 @@ async def chatkit_endpoint(request: Request) -> Response:
     body = await request.body()
     trace_id = trace_store.start("chatkit_request")
     try:
+        # ChatKitServer owns protocol parsing, thread lifecycle, and response
+        # streaming; this endpoint adds rate limiting and trace headers around it.
         result = await chatkit_server.process(
             body,
             RequestContext(trace_id=trace_id, client_id=client_id),

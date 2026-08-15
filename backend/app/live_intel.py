@@ -41,6 +41,8 @@ def _source(
 
 
 def _indicator_kind(indicator: str) -> str:
+    # Keep classification deterministic before touching external providers so
+    # malformed indicators cannot steer arbitrary API paths.
     try:
         ipaddress.ip_address(indicator)
         return "ip"
@@ -63,6 +65,8 @@ class LiveThreatIntelClient:
         warnings: list[str] = []
 
         with httpx.Client(timeout=self.settings.live_api_timeout_seconds) as client:
+            # Each provider contributes evidence and signals independently; a
+            # failed provider appends a warning instead of aborting the full lookup.
             self._add_virustotal_ioc(client, normalized, kind, findings, sources, warnings)
             if kind == "ip":
                 self._add_abuseipdb(client, normalized, findings, sources, warnings)
@@ -75,6 +79,8 @@ class LiveThreatIntelClient:
         suspicious_signals = int(findings.get("suspicious_signals", 0))
         abuse_score = int(findings.get("abuse_confidence_score", 0) or 0)
         otx_pulses = int(findings.get("otx_pulse_count", 0) or 0)
+        # The score is a transparent triage heuristic across heterogeneous free
+        # APIs, not a vendor-certified maliciousness score.
         risk_score = min(
             100,
             max(
@@ -107,6 +113,8 @@ class LiveThreatIntelClient:
             response.raise_for_status()
             objects = response.json().get("objects", [])
 
+        # MITRE STIX links intrusion sets to techniques through relationship
+        # objects, so actor matching and TTP extraction are intentionally separate.
         intrusion_sets = [
             item
             for item in objects
@@ -185,6 +193,8 @@ class LiveThreatIntelClient:
         self, *, product: str, version: str, trace_id: str
     ) -> ToolResult | None:
         query = f"{product} {version}"
+        # NVD keyword search is used for broad triage. The returned result stays
+        # partial until an analyst verifies exact CPE and vendor advisory ranges.
         params: dict[str, Any] = {"keywordSearch": query, "resultsPerPage": 10}
         headers = {"apiKey": self.settings.nvd_api_key} if self.settings.nvd_api_key else {}
         with httpx.Client(timeout=self.settings.live_api_timeout_seconds) as client:
@@ -266,6 +276,8 @@ class LiveThreatIntelClient:
         warnings: list[str] = []
 
         with httpx.Client(timeout=self.settings.live_api_timeout_seconds) as client:
+            # Relationship data is treated as investigative leads. The tool will
+            # return not_found unless at least one related domain or IP is present.
             if self.settings.virustotal_api_key:
                 self._add_virustotal_relations(client, normalized, kind, relationship, relations, sources, warnings)
             if kind == "ip" and self.settings.shodan_api_key:

@@ -13,6 +13,8 @@ type HealthPayload = {
 const DEFAULT_API = "http://localhost:8000/chatkit";
 
 function getClientId() {
+  // Stable anonymous ID lets the backend rate limiter group repeated requests
+  // from one browser without adding login state to the assessment demo.
   const key = "threatlens-client-id";
   const existing = localStorage.getItem(key);
   if (existing) return existing;
@@ -50,6 +52,8 @@ function App() {
   const clientId = useMemo(getClientId, []);
 
   const chatkitFetch: typeof fetch = async (input, init) => {
+    // ChatKit accepts a custom fetch; adding this header keeps the backend
+    // rate-limit logic independent from browser IP/proxy behavior.
     const headers = new Headers(init?.headers);
     headers.set("X-Client-Id", clientId);
     return fetch(input, { ...init, headers });
@@ -81,6 +85,8 @@ function App() {
     },
     history: { enabled: true, showDelete: true, showRename: true },
     startScreen: {
+      // Prompts mirror the five assessment routes so the video demo can quickly
+      // exercise intent routing, tool use, and follow-up behavior.
       greeting: "What should we investigate?",
       prompts: [
         {
@@ -123,6 +129,8 @@ function App() {
   });
 
   useEffect(() => {
+    // Surface backend readiness in the shell before the analyst sends a message;
+    // this also proves the UI is connected to the Agents SDK service.
     const healthUrl = new URL(apiUrl, window.location.href);
     healthUrl.pathname = "/healthz";
     fetch(healthUrl)
