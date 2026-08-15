@@ -28,4 +28,3 @@ class SlidingWindowRateLimiter:
             return False, retry_after
         events.append(now)
         return True, 0
-

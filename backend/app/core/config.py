@@ -36,6 +36,10 @@ class Settings(BaseSettings):
         default="http://localhost:5173,http://127.0.0.1:5173",
         alias="ALLOWED_ORIGINS",
     )
+    allowed_origin_regex: str | None = Field(
+        default=r"^https?://(localhost|127\.0\.0\.1):\d+$",
+        alias="ALLOWED_ORIGIN_REGEX",
+    )
 
     @property
     def origins(self) -> list[str]:

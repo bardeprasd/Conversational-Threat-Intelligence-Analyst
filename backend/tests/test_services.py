@@ -1,5 +1,5 @@
-from app.models import EvidenceSource, ToolResult
-from app.services import ThreatIntelService
+from app.schemas.threat_intel import EvidenceSource, ToolResult
+from app.services.threat_intel import ThreatIntelService
 
 
 def _source() -> EvidenceSource:

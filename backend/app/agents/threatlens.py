@@ -15,9 +15,9 @@ from chatkit.agents import AgentContext
 from chatkit.types import ProgressUpdateEvent
 from pydantic import BaseModel
 
-from .security import AGENT_SECURITY_INSTRUCTIONS, scan_direct_prompt
-from .services import toolbox
-from .settings import get_settings
+from app.core.config import get_settings
+from app.core.security import AGENT_SECURITY_INSTRUCTIONS, scan_direct_prompt
+from app.services.threat_intel import toolbox
 
 
 class RequestContext(BaseModel):
@@ -86,7 +86,9 @@ async def profile_threat_actor(
 @function_tool(
     description_override=(
         "Map a software product and version to known vulnerability rules. "
-        "Use for exposure, vulnerability, or CVE questions. Never assume a missing patch number."
+        "Use for exposure, vulnerability, or CVE questions. Accept major/minor "
+        "version families such as 7.13 and report the result as triage until "
+        "the exact patch is verified."
     )
 )
 async def assess_software_exposure(
@@ -196,13 +198,13 @@ You are ThreatLens, a defensive SOC threat-intelligence analyst.
 Routing:
 1. IOC reputation -> lookup_ioc.
 2. Named threat actor or TTPs -> profile_threat_actor.
-3. Product/version exposure -> assess_software_exposure.
+3. Product/version exposure -> assess_software_exposure. If the user gives a version family such as "7.13" without a patch, call the tool with that version and state that exact patch/CPE verification is still required.
 4. Related domains/IPs -> pivot_related_entities.
 5. Follow-up attribute such as "what is its ASN?" -> resolve the entity from chat history, then get_entity_attribute.
 
 Answer contract:
 - For factual intelligence, call the appropriate tool before answering.
-- If essential arguments are missing, ask one concise clarification question and do not call a tool.
+- If essential arguments are missing, ask one concise clarification question and do not call a tool. A product plus major/minor version is sufficient for exposure triage.
 - Cite every factual claim using the source title and URL returned by the tool.
 - State the confidence percentage and all caveats. Clearly identify live-provider evidence and avoid overstating coverage.
 - Never turn absence into a benign verdict. Never invent an entity, relationship, CVE, TTP, source, or score.

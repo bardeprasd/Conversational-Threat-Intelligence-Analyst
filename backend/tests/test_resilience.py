@@ -1,5 +1,5 @@
-from app.rate_limit import SlidingWindowRateLimiter
-from app.services import ThreatIntelService, ThreatToolbox
+from app.core.rate_limit import SlidingWindowRateLimiter
+from app.services.threat_intel import ThreatIntelService, ThreatToolbox
 
 
 class FailingLiveClient:

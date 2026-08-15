@@ -18,10 +18,10 @@ from chatkit.types import (
     UserMessageTextContent,
 )
 
-from .agent import RequestContext, assistant_agent
-from .observability import trace_store
-from .security import scan_direct_prompt
-from .settings import get_settings
+from app.agents.threatlens import RequestContext, assistant_agent
+from app.core.config import get_settings
+from app.core.observability import trace_store
+from app.core.security import scan_direct_prompt
 
 
 def _message_text(item: UserMessageItem | None) -> str:

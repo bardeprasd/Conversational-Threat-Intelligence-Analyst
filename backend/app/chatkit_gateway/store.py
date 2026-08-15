@@ -117,4 +117,3 @@ class InMemoryStore(Store[Any]):
 
     async def delete_attachment(self, attachment_id: str, context: Any) -> None:
         self.attachments.pop(attachment_id, None)
-

@@ -8,9 +8,9 @@ from urllib.parse import quote
 
 import httpx
 
-from .models import EvidenceSource, ToolResult
-from .security import sanitize_untrusted_payload
-from .settings import Settings
+from app.core.config import Settings
+from app.core.security import sanitize_untrusted_payload
+from app.schemas.threat_intel import EvidenceSource, ToolResult
 
 
 _HASH = re.compile(r"^[a-fA-F0-9]{32}(?:[a-fA-F0-9]{8}|[a-fA-F0-9]{32})?$")

@@ -1,4 +1,4 @@
-from app.security import sanitize_untrusted_payload, scan_direct_prompt
+from app.core.security import sanitize_untrusted_payload, scan_direct_prompt
 
 
 def test_direct_injection_is_blocked_before_tools():

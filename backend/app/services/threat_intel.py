@@ -4,10 +4,10 @@ import time
 from collections.abc import Callable
 from typing import Any
 
-from .live_intel import LiveThreatIntelClient
-from .models import ToolResult
-from .observability import trace_store
-from .settings import Settings, get_settings
+from app.core.config import Settings, get_settings
+from app.core.observability import trace_store
+from app.schemas.threat_intel import ToolResult
+from app.services.live_intel import LiveThreatIntelClient
 
 
 class ThreatIntelService:
