@@ -81,12 +81,11 @@ function App() {
     },
     header: {
       enabled: true,
-      title: { enabled: true, text: "Live threat-intelligence investigation" },
+      title: { enabled: false },
     },
     history: { enabled: true, showDelete: true, showRename: true },
     startScreen: {
-      // Prompts mirror the five assessment routes so the video demo can quickly
-      // exercise intent routing, tool use, and follow-up behavior.
+      // Keep the start screen focused on standalone investigation routes.
       greeting: "What should we investigate?",
       prompts: [
         {
@@ -103,11 +102,6 @@ function App() {
           label: "NVD exposure check",
           prompt: "We run Confluence 7.13 - are we exposed?",
           icon: "bug",
-        },
-        {
-          label: "Multi-turn pivot",
-          prompt: "Pivot from 45.83.122.10 to related domains.",
-          icon: "compass",
         },
       ],
     },
