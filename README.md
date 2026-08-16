@@ -44,7 +44,17 @@ The browser sends ChatKit protocol requests to FastAPI. The ChatKit server suppl
 
 ## Configuration
 
-Create `.env` in the repository root. This file is ignored by Git. Never commit real credentials.
+### Backend environment
+
+Create a file named `.env` inside the `backend` folder:
+
+```text
+backend/.env
+```
+
+Add the following configuration. Replace each `your_*` placeholder with the
+corresponding API key. Keep a provider line empty when you do not have that
+optional key. This file is ignored by Git; never commit real credentials.
 
 ```dotenv
 # Required for the agent
@@ -52,11 +62,11 @@ OPENAI_API_KEY=your_openai_api_key
 OPENAI_MODEL=gpt-5.6-luna
 
 # Optional live intelligence providers
-VIRUSTOTAL_API_KEY=
-ABUSEIPDB_API_KEY=
-OTX_API_KEY=
-SHODAN_API_KEY=
-NVD_API_KEY=
+VIRUSTOTAL_API_KEY=your_virustotal_api_key
+ABUSEIPDB_API_KEY=your_abuseipdb_api_key
+OTX_API_KEY=your_otx_api_key
+SHODAN_API_KEY=your_shodan_api_key
+NVD_API_KEY=your_nvd_api_key
 
 # Runtime controls
 LIVE_API_TIMEOUT_SECONDS=8
@@ -71,12 +81,23 @@ ALLOWED_ORIGIN_REGEX=^https?://(localhost|127\.0\.0\.1):\d+$
 
 `OPENAI_API_KEY` is required. The provider keys are optional, but IOC and pivot coverage depends on which providers are configured. MITRE ATT&CK actor data and NVD searches do not require keys; an NVD key improves quota limits.
 
-The frontend defaults to `http://localhost:8000/chatkit`. Override it in `frontend/.env` when needed:
+### Frontend environment
+
+Create a separate file named `.env` inside the `frontend` folder:
+
+```text
+frontend/.env
+```
+
+Add the following browser configuration:
 
 ```dotenv
 VITE_CHATKIT_API_URL=http://localhost:8000/chatkit
 VITE_CHATKIT_DOMAIN_KEY=local-dev
 ```
+
+Do not add OpenAI or threat-provider API keys to `frontend/.env`. Every `VITE_*`
+value is bundled into browser code and can be viewed by the user.
 
 ## Install and run
 
