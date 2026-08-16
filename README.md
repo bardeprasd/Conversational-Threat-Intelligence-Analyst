@@ -40,7 +40,7 @@ The browser sends ChatKit protocol requests to FastAPI. The ChatKit server suppl
 - Python 3.11 or newer
 - Node.js 20.19+ or 22.12+
 - An OpenAI API key
-- Optional threat-intelligence API keys for broader live coverage
+- threat-intelligence API keys for broader live coverage
 
 ## Configuration
 
@@ -61,7 +61,7 @@ optional key. This file is ignored by Git; never commit real credentials.
 OPENAI_API_KEY=your_openai_api_key
 OPENAI_MODEL=gpt-5.6-luna
 
-# Optional live intelligence providers
+# live intelligence providers
 VIRUSTOTAL_API_KEY=your_virustotal_api_key
 ABUSEIPDB_API_KEY=your_abuseipdb_api_key
 OTX_API_KEY=your_otx_api_key
