@@ -1,3 +1,5 @@
+"""Bounded local telemetry that complements OpenAI Agents SDK tracing."""
+
 from __future__ import annotations
 
 import json

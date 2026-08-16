@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    // Compile-check Vite configuration separately from browser application code.
     "composite": true,
     "skipLibCheck": true,
     "module": "ESNext",
@@ -10,4 +11,3 @@
   },
   "include": ["vite.config.ts"]
 }
-

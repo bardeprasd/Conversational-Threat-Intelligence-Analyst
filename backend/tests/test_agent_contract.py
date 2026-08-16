@@ -1,3 +1,5 @@
+"""Contract tests for the agent's tool allowlist and generated JSON schemas."""
+
 from app.agents.threatlens import assistant_agent
 
 

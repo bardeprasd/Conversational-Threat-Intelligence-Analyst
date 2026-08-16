@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    // Target modern browsers and enforce strict, bundler-compatible type checking.
     "target": "ES2022",
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
@@ -18,4 +19,3 @@
   },
   "include": ["src"]
 }
-

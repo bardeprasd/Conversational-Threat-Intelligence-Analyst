@@ -1,4 +1,4 @@
-"""Agent definitions and tool wiring."""
+"""Agent definitions, instructions, guardrails, and tool registrations."""
 
 from app.agents.threatlens import RequestContext, assistant_agent, build_agent
 

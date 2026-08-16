@@ -1,3 +1,5 @@
+"""Public HTTP routes and request-level controls for the ChatKit gateway."""
+
 from __future__ import annotations
 
 from agents import set_default_openai_key

@@ -1,3 +1,5 @@
+"""ChatKit server that joins thread history, security checks, and agent runs."""
+
 from __future__ import annotations
 
 from collections.abc import AsyncIterator

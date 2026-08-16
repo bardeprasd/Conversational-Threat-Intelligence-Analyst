@@ -1,3 +1,5 @@
+"""FastAPI application factory and process-wide middleware configuration."""
+
 from __future__ import annotations
 
 import logging

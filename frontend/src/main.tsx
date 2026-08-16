@@ -1,3 +1,4 @@
+/** Browser entry point for mounting the ThreatLens React application. */
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
@@ -8,4 +9,3 @@ createRoot(document.getElementById("root")!).render(
     <App />
   </StrictMode>,
 );
-

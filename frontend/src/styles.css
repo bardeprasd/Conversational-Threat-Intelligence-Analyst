@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap");
 
+/* Shared visual tokens keep the assessment shell and ChatKit theme consistent. */
 :root {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   color: #111827;
@@ -47,6 +48,7 @@ button, input, textarea { font: inherit; }
   border: 0;
 }
 
+/* Two-column application shell: reference material at left, investigation at right. */
 .app-shell {
   height: 100vh;
   height: 100dvh;
@@ -82,6 +84,7 @@ button, input, textarea { font: inherit; }
   background: linear-gradient(var(--accent), transparent);
 }
 
+/* Product identity and assessment capability summary. */
 .brand-lockup {
   display: flex;
   align-items: center;
@@ -238,6 +241,7 @@ button, input, textarea { font: inherit; }
   color: var(--blue);
 }
 
+/* The workspace grid reserves stable rows and gives all remaining height to chat. */
 .workspace {
   min-width: 0;
   height: 100%;
@@ -324,6 +328,7 @@ button, input, textarea { font: inherit; }
   background: #ff6b6b;
 }
 
+/* Compact runtime metadata remains visible without competing with the conversation. */
 .mode-label {
   color: #1f4e8c;
   font-family: "IBM Plex Mono", monospace;
@@ -373,6 +378,7 @@ button, input, textarea { font: inherit; }
   color: var(--accent);
 }
 
+/* Chat panel sizing prevents the composer from being clipped on laptop viewports. */
 .chat-panel {
   position: relative;
   min-height: 0;
@@ -438,6 +444,7 @@ button, input, textarea { font: inherit; }
   box-shadow: 0 0 12px rgba(227,6,19,.32);
 }
 
+/* ChatKit custom properties and exposed parts align the embedded UI with the shell. */
 .chatkit-frame {
   position: relative;
   z-index: 1;
@@ -524,6 +531,7 @@ button, input, textarea { font: inherit; }
   font-size: 8px;
 }
 
+/* Collapse secondary content before reducing the usable conversation area. */
 @media (max-width: 980px) {
   .app-shell { grid-template-columns: 250px minmax(0, 1fr); }
   .side-rail { padding: 24px 20px; }
@@ -533,6 +541,7 @@ button, input, textarea { font: inherit; }
   .intel-strip { grid-template-columns: 1fr 1fr; }
 }
 
+/* Mobile mode prioritizes the active conversation and removes decorative metadata. */
 @media (max-width: 720px) {
   .app-shell { display: block; }
   .side-rail {

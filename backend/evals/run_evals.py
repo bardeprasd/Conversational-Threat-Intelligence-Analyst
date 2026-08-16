@@ -1,3 +1,5 @@
+"""Live behavioral smoke suite for routing, context, grounding, and security."""
+
 from __future__ import annotations
 
 import argparse

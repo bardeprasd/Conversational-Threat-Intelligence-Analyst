@@ -1,4 +1,4 @@
-"""Configuration, security, observability, and infrastructure helpers."""
+"""Shared configuration, security, rate limiting, and observability utilities."""
 
 from app.core.config import Settings, get_settings
 from app.core.observability import trace_store

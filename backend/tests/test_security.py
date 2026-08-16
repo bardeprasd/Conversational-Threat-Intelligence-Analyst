@@ -1,3 +1,5 @@
+"""Tests for direct prompt blocking and indirect evidence sanitization."""
+
 from app.core.security import sanitize_untrusted_payload, scan_direct_prompt
 
 

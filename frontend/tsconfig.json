@@ -1,8 +1,8 @@
 {
+  // Keep browser and build-tool type checking isolated while building both together.
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ]
 }
-

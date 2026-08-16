@@ -1,1 +1,1 @@
-"""ChatKit protocol adapter and store implementations."""
+"""ChatKit protocol adapter and assessment-scoped conversation storage."""

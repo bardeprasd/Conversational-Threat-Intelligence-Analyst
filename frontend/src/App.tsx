@@ -1,3 +1,9 @@
+/**
+ * Application shell for the ThreatLens ChatKit client.
+ *
+ * ChatKit owns conversation rendering and protocol state; this component adds
+ * assessment branding, backend health visibility, and a stable rate-limit ID.
+ */
 import { useEffect, useMemo, useState } from "react";
 import { ChatKit, useChatKit } from "@openai/chatkit-react";
 

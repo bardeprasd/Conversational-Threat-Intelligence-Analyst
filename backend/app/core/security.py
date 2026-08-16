@@ -1,3 +1,5 @@
+"""Direct and indirect prompt-injection controls at trust boundaries."""
+
 from __future__ import annotations
 
 import re

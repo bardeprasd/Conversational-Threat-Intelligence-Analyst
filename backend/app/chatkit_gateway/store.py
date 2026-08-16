@@ -1,3 +1,5 @@
+"""In-memory implementation of the ChatKit thread and attachment store."""
+
 from __future__ import annotations
 
 from collections import defaultdict

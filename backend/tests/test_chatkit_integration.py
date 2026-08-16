@@ -1,3 +1,5 @@
+"""End-to-end protocol tests for streaming, thread context, and early blocking."""
+
 import json
 
 from fastapi.testclient import TestClient

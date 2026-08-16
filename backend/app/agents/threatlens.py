@@ -1,3 +1,5 @@
+"""ThreatLens agent contract, read-only tools, and model-facing guardrails."""
+
 from __future__ import annotations
 
 import json

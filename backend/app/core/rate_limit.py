@@ -1,3 +1,5 @@
+"""Process-local sliding-window limiter for protecting quota-bound services."""
+
 from __future__ import annotations
 
 import time
@@ -6,6 +8,8 @@ from collections.abc import Callable
 
 
 class SlidingWindowRateLimiter:
+    """Track request timestamps per client and return an HTTP-friendly retry delay."""
+
     def __init__(
         self,
         requests: int,

@@ -1,3 +1,5 @@
+"""Failure-path tests for provider errors and request quota enforcement."""
+
 from app.core.rate_limit import SlidingWindowRateLimiter
 from app.services.threat_intel import ThreatIntelService, ThreatToolbox
 
